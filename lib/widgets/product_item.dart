@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/product_detail_screen.dart';
+
 class ProductItem extends StatelessWidget {
   final String id;
   final String title;
@@ -13,10 +15,18 @@ class ProductItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
-        // box fit stretches image over availible space
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
+        // gesture detector allows us to make the image clickable
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(''
+              
+            );
+          },
+          child: Image.network(
+            imageUrl,
+            // box fit stretches image over availible space
+            fit: BoxFit.cover,
+          ),
         ),
         // adds bar at botom of grid tile
         footer: GridTileBar(
