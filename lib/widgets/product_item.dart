@@ -18,9 +18,7 @@ class ProductItem extends StatelessWidget {
         // gesture detector allows us to make the image clickable
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(''
-              
-            );
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: id);
           },
           child: Image.network(
             imageUrl,
