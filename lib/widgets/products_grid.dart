@@ -18,9 +18,12 @@ class ProductsGrid extends StatelessWidget {
           10.0), // set const to make sure it does not rebuild. saves performance
       itemCount: products.length,
       // item builder is what we will see on the screen. listening to product
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+      // using .value as flutter recycles widgets. if we used builder method then it can cause bugs when there are more items then screen space.
+      // use this .value on grids or lists. 
+      // flutter will dispose of the data if done this way when screen is popped when using changeNotifier
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         // products[i] returns single product item as it is stored in ProductsProvider
-        builder: (c) => products[i],
+        value: products[i],
         child: ProductItem(
           
         ),
