@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/product.dart';
+import './product.dart';
 
 // using mixin. like inheritence
 class ProductsProvider with ChangeNotifier {

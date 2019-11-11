@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
+import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-
-  ProductItem(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
+    // getting products from parent widget. 
+    final product = Provider.of<Product>(context);
+
     // cliprrect used to add rounded corners. wrapping widegets that dont have border radius in these allows you to have access to border radius
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -18,10 +18,10 @@ class ProductItem extends StatelessWidget {
         // gesture detector allows us to make the image clickable
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: id);
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: product.id);
           },
           child: Image.network(
-            imageUrl,
+            product.imageUrl,
             // box fit stretches image over availible space
             fit: BoxFit.cover,
           ),
@@ -32,14 +32,17 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           // leading defines widget placed on the atart of bar
           leading: IconButton(
-            icon: Icon(
-              Icons.favorite,
+            // set icon to favourite true / false
+            icon: Icon(product.favourite ?  Icons.favorite : Icons.favorite_border,
               color: Theme.of(context).accentColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              // call proviser method to set favourite
+              product.toggleFavouriteStatus();
+            },
           ),
           title: Text(
-            title,
+            product.title,
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
