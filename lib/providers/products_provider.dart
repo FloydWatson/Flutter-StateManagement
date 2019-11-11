@@ -46,6 +46,10 @@ class ProductsProvider with ChangeNotifier {
     return [..._items];
   }
 
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
 // widgets listening can see list has been edited. then call for new list at rebuild trigger
   void addProduct() {
     //_items.add(value);
