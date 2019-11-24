@@ -5,20 +5,27 @@ import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    // getting products from parent widget. 
-    final product = Provider.of<Product>(context);
+    // getting products from parent widget.
+    final product = Provider.of<Product>(context, listen: false);
 
-    // cliprrect used to add rounded corners. wrapping widegets that dont have border radius in these allows you to have access to border radius
+    // when using provider of, as seen above, then the whole build method will run when data changes
+
+    // using consumer will on re run what is wrapped inside it when it is updated.
+    // this way we could have only the icon button wrapped in consumer
+
+   
     return ClipRRect(
+      // cliprrect used to add rounded corners. wrapping widegets that dont have border radius in these allows you to have access to border radius
+
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         // gesture detector allows us to make the image clickable
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: product.id);
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
+                arguments: product.id);
           },
           child: Image.network(
             product.imageUrl,
@@ -31,15 +38,19 @@ class ProductItem extends StatelessWidget {
           // black 54 opaque black
           backgroundColor: Colors.black87,
           // leading defines widget placed on the atart of bar
-          leading: IconButton(
-            // set icon to favourite true / false
-            icon: Icon(product.favourite ?  Icons.favorite : Icons.favorite_border,
-              color: Theme.of(context).accentColor,
+          // consumer is an alternative listener.
+          leading: Consumer<Product>(
+            builder: (ctx, product, child) => IconButton(
+              // set icon to favourite true / false
+              icon: Icon(
+                product.favourite ? Icons.favorite : Icons.favorite_border,
+                color: Theme.of(context).accentColor,
+              ),
+              onPressed: () {
+                // call proviser method to set favourite
+                product.toggleFavouriteStatus();
+              },
             ),
-            onPressed: () {
-              // call proviser method to set favourite
-              product.toggleFavouriteStatus();
-            },
           ),
           title: Text(
             product.title,
