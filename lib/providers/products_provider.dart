@@ -40,16 +40,18 @@ class ProductsProvider with ChangeNotifier {
     ),
   ];
 
-  // variable used by popMenuButton to filter what is shown
-  var _showFavouritesOnly = false;
 
   // if just list is returned then you get a pointer to that list, a Reference of it
   List<Product> get items{
-    if (_showFavouritesOnly){
-      return _items.where((prodItem) => prodItem.favourite).toList();
-    }
+
     // Spread operator
     return [..._items];
+  }
+
+  List<Product> get favouriteItems{
+    // return only favourites
+    return _items.where((prodItem) => prodItem.favourite).toList();
+
   }
 
   Product findById(String id) {
@@ -62,15 +64,5 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // will filter shown items. need to notify listeners
-  void showFavouritesOnly() {
-    _showFavouritesOnly = true;
-    notifyListeners();
-  }
-
-  void showAll() {
-    _showFavouritesOnly = false;
-    notifyListeners();
-  }
 
 }

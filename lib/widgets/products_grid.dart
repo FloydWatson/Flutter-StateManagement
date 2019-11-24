@@ -5,13 +5,21 @@ import '../providers/products_provider.dart';
 import './product_item.dart';
 
 class ProductsGrid extends StatelessWidget {
+
+  
+  // variable used to show only favourites
+  final bool showFavourites;
+
+  ProductsGrid(this.showFavourites);
+
   @override
   Widget build(BuildContext context) {
+
     // set up provider listener. change of method to tell it to listen to instance created in main
     final productsData = Provider.of<ProductsProvider>(context);
 
-    // getting product list [] from provider
-    final products = productsData.items;
+    // getting product list [] from provider. or favourites list
+    final products = showFavourites ? productsData.favouriteItems : productsData.items;
 
     return GridView.builder(
       padding: const EdgeInsets.all(

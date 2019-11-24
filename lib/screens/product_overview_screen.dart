@@ -4,22 +4,21 @@ import 'package:provider/provider.dart';
 import '../widgets/products_grid.dart';
 import '../providers/products_provider.dart';
 
-
 enum FilterOptions {
   Favoutires,
   All,
 }
 
-class ProductOverviewScreen extends StatelessWidget {
+class ProductOverviewScreen extends StatefulWidget {
+  @override
+  _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
+}
 
-
+class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
+  var _showOnlyFavourites = false;
 
   @override
   Widget build(BuildContext context) {
-
-      // access ptoducts provider
-  final productsContainer = Provider.of<ProductsProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('My Shop'),
@@ -31,11 +30,15 @@ class ProductOverviewScreen extends StatelessWidget {
               Icons.more_vert,
             ),
             onSelected: (FilterOptions selectedValue) {
-              if (selectedValue == FilterOptions.Favoutires){
-                productsContainer.showFavouritesOnly();
+              // needs to be in setState or ui wont update
+              setState(() {
+                if (selectedValue == FilterOptions.Favoutires) {
+                _showOnlyFavourites = true;
               } else {
-                productsContainer.showAll();
+                _showOnlyFavourites = false;
               }
+              });
+              
             },
             itemBuilder: (_) => [
               // needs to return a list of widgets
@@ -53,7 +56,7 @@ class ProductOverviewScreen extends StatelessWidget {
         ],
       ),
       // grid view here only renders objects on scrren at the time
-      body: ProductsGrid(),
+      body: ProductsGrid(_showOnlyFavourites),
     );
   }
 }
