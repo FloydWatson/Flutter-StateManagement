@@ -39,6 +39,7 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           // leading defines widget placed on the atart of bar
           // consumer is an alternative listener.
+          // child is a widget that you do not want to update on rebuild. like a static text
           leading: Consumer<Product>(
             builder: (ctx, product, child) => IconButton(
               // set icon to favourite true / false
