@@ -25,6 +25,16 @@ class Cart with ChangeNotifier {
     return _items == null ? 0 : _items.length;
   }
 
+  double get totalAmount {
+    double total = 0.0;
+    // runs this function for every item in the map
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    // returns calculated total
+    return total;
+  }
+
   void addItem(String productId, double price, String title) {
     // if this product id already exists on map then only increase quantity
     if (_items.containsKey(productId)) {

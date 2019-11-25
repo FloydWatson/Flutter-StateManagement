@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
+import '../screens/cart_screen.dart';
 import '../providers/cart.dart';
 
 enum FilterOptions {
@@ -70,7 +71,10 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               icon: Icon(
                 Icons.shopping_cart,
               ),
-              onPressed: () {},
+              onPressed: () {
+                // navigating to cart screen
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
             ),
             ),
         ],
