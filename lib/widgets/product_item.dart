@@ -3,12 +3,17 @@ import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
+import '../providers/cart.dart';
 
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // getting products from parent widget.
     final product = Provider.of<Product>(context, listen: false);
+    // listen false stops wodget from rebuilding when provider changes
+    // getting cart from parent widget
+    final cart = Provider.of<Cart>(context, listen: false);
+
 
     // when using provider of, as seen above, then the whole build method will run when data changes
 
