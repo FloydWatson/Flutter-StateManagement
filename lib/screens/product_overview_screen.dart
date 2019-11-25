@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/products_grid.dart';
-import '../providers/products_provider.dart';
+import '../widgets/badge.dart';
+import '../providers/cart.dart';
 
 enum FilterOptions {
   Favoutires,
@@ -10,6 +11,7 @@ enum FilterOptions {
 }
 
 class ProductOverviewScreen extends StatefulWidget {
+
   @override
   _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
@@ -17,8 +19,15 @@ class ProductOverviewScreen extends StatefulWidget {
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavourites = false;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    
+    //final cart = Provider.of<Cart>(context);
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('My Shop'),
@@ -33,12 +42,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               // needs to be in setState or ui wont update
               setState(() {
                 if (selectedValue == FilterOptions.Favoutires) {
-                _showOnlyFavourites = true;
-              } else {
-                _showOnlyFavourites = false;
-              }
+                  _showOnlyFavourites = true;
+                } else {
+                  _showOnlyFavourites = false;
+                }
               });
-              
             },
             itemBuilder: (_) => [
               // needs to return a list of widgets
@@ -53,6 +61,18 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               ),
             ],
           ),
+          // ch is child defined below. button wont be rebuilt when cart changes
+          Consumer<Cart>(builder: (_, cart, ch) => Badge(
+            child: ch,
+            value: cart.itemCount.toString(),
+          ),
+           child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {},
+            ),
+            ),
         ],
       ),
       // grid view here only renders objects on scrren at the time
